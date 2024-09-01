@@ -35,6 +35,7 @@ list_of_files = [
     f"{project_name}/src/khwarizm/preprocessing.py",  
     f"{project_name}/src/khwarizm/metrics.py",
     f"{project_name}/src/khwarizm/ensembles.py",
+    f"{project_name}/src/khwarizm/feature_selection.py",
     f"{project_name}/src/khwarizm/utils.py",
     f"{project_name}/src/khwarizm/logs.py",
     f"{project_name}/src/khwarizm/reports.py",
@@ -42,6 +43,7 @@ list_of_files = [
     f"{project_name}/tests/test_preprocessing.py",
     f"{project_name}/tests/test_metrics.py",
     f"{project_name}/tests/test_ensembles.py",
+    f"{project_name}/tests/test_feature_selection.py",
     f"{project_name}/tests/test_logs.py",
     f"{project_name}/tests/test_reports.py"
     "requirements.txt",

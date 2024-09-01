@@ -1,0 +1,141 @@
+[
+    {
+        "label": "contextlib,",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "contextlib.",
+        "description": "contextlib.",
+        "detail": "contextlib.",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "trange",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "setup",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "find_packages",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "suppress_output",
+        "kind": 2,
+        "importPath": "khwarizm.src.khwarizm.feature_selection",
+        "description": "khwarizm.src.khwarizm.feature_selection",
+        "peekOfCode": "def suppress_output():\n    with open(os.devnull, 'w') as devnull:\n        old_stdout = sys.stdout\n        old_stderr = sys.stderr\n        sys.stdout = devnull\n        sys.stderr = devnull\n        try:\n            yield\n        finally:\n            sys.stdout = old_stdout",
+        "detail": "khwarizm.src.khwarizm.feature_selection",
+        "documentation": {}
+    },
+    {
+        "label": "validate",
+        "kind": 2,
+        "importPath": "khwarizm.src.khwarizm.feature_selection",
+        "description": "khwarizm.src.khwarizm.feature_selection",
+        "peekOfCode": "def validate(trainset, testset, target_col, feature_name=None):\n    with suppress_output():\n        model.fit(trainset.drop(columns=target_col), trainset[target_col])\n    pred = model.predict(testset.drop(columns=target_col))\n    valid_idx = testset[target_col].notna()\n    valid_testset = testset[target_col][valid_idx]\n    valid_pred = pred[valid_idx]\n    score = mean_squared_error(valid_testset, valid_pred, squared=False)\n    if feature_name:\n        print(f'Using features: Based_features, {feature_name} | Validation MSE: {score}')",
+        "detail": "khwarizm.src.khwarizm.feature_selection",
+        "documentation": {}
+    },
+    {
+        "label": "feature_combination_analysis",
+        "kind": 2,
+        "importPath": "khwarizm.src.khwarizm.feature_selection",
+        "description": "khwarizm.src.khwarizm.feature_selection",
+        "peekOfCode": "def feature_combination_analysis(train, target_col, groups, n_splits):\n    base_features =  ['LAT', 'LON', 'LST', 'NO2_strat', 'NO2_total', 'NO2_trop', 'TropopausePressure', 'lon_cluster', 'Month', 'Month_Day', 'Year_Week', 'Month_lag1', 'Month_lag2', 'NO2_trop_rolling_max_60', 'NO2_total_rolling_max_60', 'TropopausePressure_rolling_max_60', 'CloudFraction_rolling_max_60', 'Precipitation_rolling_max_60']\n    additional_features = [col for col in train.drop(columns=target_col).columns if col not in base_features]\n    feature_importances = {}\n    for col in additional_features:\n        scores = []\n        print(f'Evaluating feature: {col}')\n        for train_idx, test_idx in cv.split(train[[target_col] + base_features + [col]], train[target_col], groups=groups):\n            train_v, test_v = train.iloc[train_idx], train.iloc[test_idx]\n            scores.append(validate(train_v[[target_col] + base_features + [col]], test_v[[target_col] + base_features + [col]], target_col, col))",
+        "detail": "khwarizm.src.khwarizm.feature_selection",
+        "documentation": {}
+    },
+    {
+        "label": "feature_importances",
+        "kind": 5,
+        "importPath": "khwarizm.src.khwarizm.feature_selection",
+        "description": "khwarizm.src.khwarizm.feature_selection",
+        "peekOfCode": "feature_importances = feature_combination_analysis(train, 'GT_NO2', groups, n_splits)",
+        "detail": "khwarizm.src.khwarizm.feature_selection",
+        "documentation": {}
+    },
+    {
+        "label": "create_directory",
+        "kind": 2,
+        "importPath": "template",
+        "description": "template",
+        "peekOfCode": "def create_directory(path):\n    if not os.path.exists(path):\n        os.makedirs(path)\ndef create_file(path, content=''):\n    with open(path, 'w') as file:\n        file.write(content)\ndef create_project_structure():\n    root = 'khwarizm'\n    create_directory(root)\n    #hte root level files ",
+        "detail": "template",
+        "documentation": {}
+    },
+    {
+        "label": "create_file",
+        "kind": 2,
+        "importPath": "template",
+        "description": "template",
+        "peekOfCode": "def create_file(path, content=''):\n    with open(path, 'w') as file:\n        file.write(content)\ndef create_project_structure():\n    root = 'khwarizm'\n    create_directory(root)\n    #hte root level files \n    create_file(os.path.join(root, 'gitignore'))\n    create_file(os.path.join(root, 'README.md'))\n    create_file(os.path.join(root, 'requirements.txt'))",
+        "detail": "template",
+        "documentation": {}
+    },
+    {
+        "label": "create_project_structure",
+        "kind": 2,
+        "importPath": "template",
+        "description": "template",
+        "peekOfCode": "def create_project_structure():\n    root = 'khwarizm'\n    create_directory(root)\n    #hte root level files \n    create_file(os.path.join(root, 'gitignore'))\n    create_file(os.path.join(root, 'README.md'))\n    create_file(os.path.join(root, 'requirements.txt'))\n    create_file(os.path.join(root, 'setup.py'))\n    src_dir = os.path.join(root,'src')\n    create_directory(src_dir)",
+        "detail": "template",
+        "documentation": {}
+    },
+    {
+        "label": "project_name",
+        "kind": 5,
+        "importPath": "template",
+        "description": "template",
+        "peekOfCode": "project_name = \"khwarizm\"\nlist_of_files = [\n    f\"{project_name}/__init__.py\",\n    f\"{project_name}/src/khwarizm/__init__.py\",\n    f\"{project_name}/src/khwarizm/preprocessing.py\",  \n    f\"{project_name}/src/khwarizm/metrics.py\",\n    f\"{project_name}/src/khwarizm/ensembles.py\",\n    f\"{project_name}/src/khwarizm/feature_selection.py\",\n    f\"{project_name}/src/khwarizm/utils.py\",\n    f\"{project_name}/src/khwarizm/logs.py\",",
+        "detail": "template",
+        "documentation": {}
+    },
+    {
+        "label": "list_of_files",
+        "kind": 5,
+        "importPath": "template",
+        "description": "template",
+        "peekOfCode": "list_of_files = [\n    f\"{project_name}/__init__.py\",\n    f\"{project_name}/src/khwarizm/__init__.py\",\n    f\"{project_name}/src/khwarizm/preprocessing.py\",  \n    f\"{project_name}/src/khwarizm/metrics.py\",\n    f\"{project_name}/src/khwarizm/ensembles.py\",\n    f\"{project_name}/src/khwarizm/feature_selection.py\",\n    f\"{project_name}/src/khwarizm/utils.py\",\n    f\"{project_name}/src/khwarizm/logs.py\",\n    f\"{project_name}/src/khwarizm/reports.py\",",
+        "detail": "template",
+        "documentation": {}
+    }
+]

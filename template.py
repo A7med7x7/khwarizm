@@ -1,29 +1,3 @@
-"""import os
-
-def create_directory(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
-        
-def create_file(path, content=''):
-    with open(path, 'w') as file:
-        file.write(content)
-        
-def create_project_structure():
-    root = 'khwarizm'
-    create_directory(root)
-    
-    #hte root level files 
-    create_file(os.path.join(root, 'gitignore'))
-    create_file(os.path.join(root, 'README.md'))
-    create_file(os.path.join(root, 'requirements.txt'))
-    create_file(os.path.join(root, 'setup.py'))
-    
-    src_dir = os.path.join(root,'src')
-    create_directory(src_dir)
-    
-    """
-    
-    
 import os
 from pathlib import Path 
  

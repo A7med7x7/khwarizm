@@ -25,22 +25,6 @@
         "documentation": {}
     },
     {
-        "label": "setup",
-        "importPath": "setuptools",
-        "description": "setuptools",
-        "isExtraImport": true,
-        "detail": "setuptools",
-        "documentation": {}
-    },
-    {
-        "label": "find_packages",
-        "importPath": "setuptools",
-        "description": "setuptools",
-        "isExtraImport": true,
-        "detail": "setuptools",
-        "documentation": {}
-    },
-    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -55,6 +39,30 @@
         "description": "pathlib",
         "isExtraImport": true,
         "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "setup",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "find_packages",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
         "documentation": {}
     },
     {
@@ -94,30 +102,21 @@
         "documentation": {}
     },
     {
-        "label": "create_directory",
-        "kind": 2,
-        "importPath": "template",
-        "description": "template",
-        "peekOfCode": "def create_directory(path):\n    if not os.path.exists(path):\n        os.makedirs(path)\ndef create_file(path, content=''):\n    with open(path, 'w') as file:\n        file.write(content)\ndef create_project_structure():\n    root = 'khwarizm'\n    create_directory(root)\n    #hte root level files ",
-        "detail": "template",
+        "label": "root_dir",
+        "kind": 5,
+        "importPath": "practice",
+        "description": "practice",
+        "peekOfCode": "root_dir = 'package_Z'\npaths = [\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"",
+        "detail": "practice",
         "documentation": {}
     },
     {
-        "label": "create_file",
-        "kind": 2,
-        "importPath": "template",
-        "description": "template",
-        "peekOfCode": "def create_file(path, content=''):\n    with open(path, 'w') as file:\n        file.write(content)\ndef create_project_structure():\n    root = 'khwarizm'\n    create_directory(root)\n    #hte root level files \n    create_file(os.path.join(root, 'gitignore'))\n    create_file(os.path.join(root, 'README.md'))\n    create_file(os.path.join(root, 'requirements.txt'))",
-        "detail": "template",
-        "documentation": {}
-    },
-    {
-        "label": "create_project_structure",
-        "kind": 2,
-        "importPath": "template",
-        "description": "template",
-        "peekOfCode": "def create_project_structure():\n    root = 'khwarizm'\n    create_directory(root)\n    #hte root level files \n    create_file(os.path.join(root, 'gitignore'))\n    create_file(os.path.join(root, 'README.md'))\n    create_file(os.path.join(root, 'requirements.txt'))\n    create_file(os.path.join(root, 'setup.py'))\n    src_dir = os.path.join(root,'src')\n    create_directory(src_dir)",
-        "detail": "template",
+        "label": "paths",
+        "kind": 5,
+        "importPath": "practice",
+        "description": "practice",
+        "peekOfCode": "paths = [\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"\n]",
+        "detail": "practice",
         "documentation": {}
     },
     {

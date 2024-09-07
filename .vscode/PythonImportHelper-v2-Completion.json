@@ -1,11 +1,44 @@
 [
     {
-        "label": "contextlib,",
+        "label": "numpy",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "contextlib.",
-        "description": "contextlib.",
-        "detail": "contextlib.",
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "sklearn.metrics",
+        "description": "sklearn.metrics",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics",
+        "documentation": {}
+    },
+    {
+        "label": "RandomForestClassifier",
+        "importPath": "sklearn.ensemble",
+        "description": "sklearn.ensemble",
+        "isExtraImport": true,
+        "detail": "sklearn.ensemble",
         "documentation": {}
     },
     {
@@ -17,11 +50,27 @@
         "documentation": {}
     },
     {
-        "label": "trange",
-        "importPath": "tqdm",
-        "description": "tqdm",
+        "label": "feature_combination",
+        "importPath": "khwarizm.feature_selection",
+        "description": "khwarizm.feature_selection",
         "isExtraImport": true,
-        "detail": "tqdm",
+        "detail": "khwarizm.feature_selection",
+        "documentation": {}
+    },
+    {
+        "label": "setup",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "find_packages",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
         "documentation": {}
     },
     {
@@ -42,81 +91,128 @@
         "documentation": {}
     },
     {
-        "label": "Path",
-        "importPath": "pathlib",
-        "description": "pathlib",
+        "label": "Ensembles",
+        "importPath": "khwarizm.src.ensembles",
+        "description": "khwarizm.src.ensembles",
         "isExtraImport": true,
-        "detail": "pathlib",
+        "detail": "khwarizm.src.ensembles",
         "documentation": {}
     },
     {
-        "label": "setup",
-        "importPath": "setuptools",
-        "description": "setuptools",
-        "isExtraImport": true,
-        "detail": "setuptools",
+        "label": "Ensembles",
+        "kind": 6,
+        "importPath": "khwarizm.ensembles",
+        "description": "khwarizm.ensembles",
+        "peekOfCode": "class Ensembles:\n    @staticmethod\n    def ensembles(models: list) -> str:\n        return f\"You have successfully selected: {models}\"",
+        "detail": "khwarizm.ensembles",
         "documentation": {}
     },
     {
-        "label": "find_packages",
-        "importPath": "setuptools",
-        "description": "setuptools",
-        "isExtraImport": true,
-        "detail": "setuptools",
-        "documentation": {}
-    },
-    {
-        "label": "suppress_output",
-        "kind": 2,
-        "importPath": "khwarizm.src.khwarizm.feature_selection",
-        "description": "khwarizm.src.khwarizm.feature_selection",
-        "peekOfCode": "def suppress_output():\n    with open(os.devnull, 'w') as devnull:\n        old_stdout = sys.stdout\n        old_stderr = sys.stderr\n        sys.stdout = devnull\n        sys.stderr = devnull\n        try:\n            yield\n        finally:\n            sys.stdout = old_stdout",
-        "detail": "khwarizm.src.khwarizm.feature_selection",
+        "label": "feature_combination",
+        "kind": 6,
+        "importPath": "khwarizm.feature_selection",
+        "description": "khwarizm.feature_selection",
+        "peekOfCode": "class feature_combination:\n    def __init__(self, model, metric=accuracy_score, cv=None):\n        self.model = model\n        self.metric = metric\n        self.cv = cv\n        self.baseline_score = None\n        self.feature_importances = None\n    def fit(self, X, y, test_size=0.2, random_state=42):\n        # Split the data into training and testing sets to test the feature\n        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(",
+        "detail": "khwarizm.feature_selection",
         "documentation": {}
     },
     {
         "label": "validate",
         "kind": 2,
-        "importPath": "khwarizm.src.khwarizm.feature_selection",
-        "description": "khwarizm.src.khwarizm.feature_selection",
-        "peekOfCode": "def validate(trainset, testset, target_col, feature_name=None):\n    with suppress_output():\n        model.fit(trainset.drop(columns=target_col), trainset[target_col])\n    pred = model.predict(testset.drop(columns=target_col))\n    valid_idx = testset[target_col].notna()\n    valid_testset = testset[target_col][valid_idx]\n    valid_pred = pred[valid_idx]\n    score = mean_squared_error(valid_testset, valid_pred, squared=False)\n    if feature_name:\n        print(f'Using features: Based_features, {feature_name} | Validation MSE: {score}')",
-        "detail": "khwarizm.src.khwarizm.feature_selection",
+        "importPath": "khwarizm.feature_selection",
+        "description": "khwarizm.feature_selection",
+        "peekOfCode": "def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):\n    model.fit(trainset.drop(columns=[target_col]),trainset[target_col])\n    y_predicted = model.predict(testset.drop(columns=target_col))\n    valid_idx = testset[target_col].notna()\n    valid_testset = testset[target_col][valid_idx]\n    valid_pred = y_predicted[valid_idx]\n    print(f\"std : {valid_testset}\")\n    score = mean_squared_error(valid_pred,valid_testset, squared=False)\n    print(f\"score : {score}\")\n    return score",
+        "detail": "khwarizm.feature_selection",
         "documentation": {}
     },
     {
-        "label": "feature_combination_analysis",
+        "label": "validation_split",
         "kind": 2,
-        "importPath": "khwarizm.src.khwarizm.feature_selection",
-        "description": "khwarizm.src.khwarizm.feature_selection",
-        "peekOfCode": "def feature_combination_analysis(train, target_col, groups, n_splits):\n    base_features =  ['LAT', 'LON', 'LST', 'NO2_strat', 'NO2_total', 'NO2_trop', 'TropopausePressure', 'lon_cluster', 'Month', 'Month_Day', 'Year_Week', 'Month_lag1', 'Month_lag2', 'NO2_trop_rolling_max_60', 'NO2_total_rolling_max_60', 'TropopausePressure_rolling_max_60', 'CloudFraction_rolling_max_60', 'Precipitation_rolling_max_60']\n    additional_features = [col for col in train.drop(columns=target_col).columns if col not in base_features]\n    feature_importances = {}\n    for col in additional_features:\n        scores = []\n        print(f'Evaluating feature: {col}')\n        for train_idx, test_idx in cv.split(train[[target_col] + base_features + [col]], train[target_col], groups=groups):\n            train_v, test_v = train.iloc[train_idx], train.iloc[test_idx]\n            scores.append(validate(train_v[[target_col] + base_features + [col]], test_v[[target_col] + base_features + [col]], target_col, col))",
-        "detail": "khwarizm.src.khwarizm.feature_selection",
+        "importPath": "khwarizm.feature_selection",
+        "description": "khwarizm.feature_selection",
+        "peekOfCode": "def validation_split(cv='GroupKFold', n_splits=5,target_col=None, groups=None): \n    stds = []\n    scores = []\n    if cv == 'GroupKFold':\n        splitter = GroupKFold(n_splits=n_splits)\n        split = splitter.split(train.drop(columns=target_col), train[target_col], groups=groups)\n    elif cv == 'KFold':\n        splitter = KFold(n_splits=n_splits)\n        split = splitter.split(train.drop(columns=target_col), train[target_col])\n    else:",
+        "detail": "khwarizm.feature_selection",
         "documentation": {}
     },
     {
-        "label": "feature_importances",
+        "label": "desc",
         "kind": 5,
-        "importPath": "khwarizm.src.khwarizm.feature_selection",
-        "description": "khwarizm.src.khwarizm.feature_selection",
-        "peekOfCode": "feature_importances = feature_combination_analysis(train, 'GT_NO2', groups, n_splits)",
-        "detail": "khwarizm.src.khwarizm.feature_selection",
+        "importPath": "khwarizm.reports",
+        "description": "khwarizm.reports",
+        "peekOfCode": "desc = pd.DataFrame(index = list(train))\ndesc['type'] = train.dtypes\ndesc['count'] = train.count()\ndesc['nunique'] = train.nunique()\ndesc['%unique'] = desc['nunique'] /len(train) * 100\ndesc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100",
+        "detail": "khwarizm.reports",
         "documentation": {}
     },
     {
-        "label": "root_dir",
+        "label": "desc['type']",
         "kind": 5,
-        "importPath": "practice",
-        "description": "practice",
-        "peekOfCode": "root_dir = 'package_Z'\npaths = [\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"",
-        "detail": "practice",
+        "importPath": "khwarizm.reports",
+        "description": "khwarizm.reports",
+        "peekOfCode": "desc['type'] = train.dtypes\ndesc['count'] = train.count()\ndesc['nunique'] = train.nunique()\ndesc['%unique'] = desc['nunique'] /len(train) * 100\ndesc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
+        "detail": "khwarizm.reports",
         "documentation": {}
     },
     {
-        "label": "paths",
+        "label": "desc['count']",
         "kind": 5,
-        "importPath": "practice",
-        "description": "practice",
-        "peekOfCode": "paths = [\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/src/main.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"\n    f\"{root_dir}/test/main_test.py\"\n]",
-        "detail": "practice",
+        "importPath": "khwarizm.reports",
+        "description": "khwarizm.reports",
+        "peekOfCode": "desc['count'] = train.count()\ndesc['nunique'] = train.nunique()\ndesc['%unique'] = desc['nunique'] /len(train) * 100\ndesc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
+        "detail": "khwarizm.reports",
+        "documentation": {}
+    },
+    {
+        "label": "desc['nunique']",
+        "kind": 5,
+        "importPath": "khwarizm.reports",
+        "description": "khwarizm.reports",
+        "peekOfCode": "desc['nunique'] = train.nunique()\ndesc['%unique'] = desc['nunique'] /len(train) * 100\ndesc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
+        "detail": "khwarizm.reports",
+        "documentation": {}
+    },
+    {
+        "label": "desc['%unique']",
+        "kind": 5,
+        "importPath": "khwarizm.reports",
+        "description": "khwarizm.reports",
+        "peekOfCode": "desc['%unique'] = desc['nunique'] /len(train) * 100\ndesc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
+        "detail": "khwarizm.reports",
+        "documentation": {}
+    },
+    {
+        "label": "desc['null']",
+        "kind": 5,
+        "importPath": "khwarizm.reports",
+        "description": "khwarizm.reports",
+        "peekOfCode": "desc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
+        "detail": "khwarizm.reports",
+        "documentation": {}
+    },
+    {
+        "label": "desc['%null']",
+        "kind": 5,
+        "importPath": "khwarizm.reports",
+        "description": "khwarizm.reports",
+        "peekOfCode": "desc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
+        "detail": "khwarizm.reports",
+        "documentation": {}
+    },
+    {
+        "label": "desc",
+        "kind": 5,
+        "importPath": "khwarizm.reports",
+        "description": "khwarizm.reports",
+        "peekOfCode": "desc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
+        "detail": "khwarizm.reports",
+        "documentation": {}
+    },
+    {
+        "label": "missing_percentage",
+        "kind": 5,
+        "importPath": "khwarizm.reports",
+        "description": "khwarizm.reports",
+        "peekOfCode": "missing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
+        "detail": "khwarizm.reports",
         "documentation": {}
     },
     {
@@ -135,6 +231,24 @@
         "description": "template",
         "peekOfCode": "list_of_files = [\n    f\"{project_name}/__init__.py\",\n    f\"{project_name}/src/khwarizm/__init__.py\",\n    f\"{project_name}/src/khwarizm/preprocessing.py\",  \n    f\"{project_name}/src/khwarizm/metrics.py\",\n    f\"{project_name}/src/khwarizm/ensembles.py\",\n    f\"{project_name}/src/khwarizm/feature_selection.py\",\n    f\"{project_name}/src/khwarizm/utils.py\",\n    f\"{project_name}/src/khwarizm/logs.py\",\n    f\"{project_name}/src/khwarizm/reports.py\",",
         "detail": "template",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "models = ['lgbm', 'catboost']\noutput = Ensembles.ensembles(models=models)\noutput",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "output",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "output = Ensembles.ensembles(models=models)\noutput",
+        "detail": "test",
         "documentation": {}
     }
 ]

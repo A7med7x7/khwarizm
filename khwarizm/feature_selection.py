@@ -5,7 +5,7 @@ from sklearn.metrics import *
 from sklearn.ensemble import RandomForestClassifier
 from tqdm import tqdm
 import contextlib, os,sys
-
+from lightgbm import LGBMRegressor
 
 @contextlib.contextmanager
 def suppress_output():
@@ -31,29 +31,32 @@ def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):
     print(f"score : {score}")
     return score
 
-def validation_split(cv='GroupKFold', n_splits=5,target_col=None, groups=None): 
+def validation_split(cv='GroupKFold', n_splits=5,dataset=None,target_col=None, groups=None): 
+    assert dataset is not None, "dataset is required"
+    assert target_col is not None, "target_col is required"
+    assert groups is not None, "groups is required"
     stds = []
     scores = []
 
     if cv == 'GroupKFold':
         splitter = GroupKFold(n_splits=n_splits)
-        split = splitter.split(train.drop(columns=target_col), train[target_col], groups=groups)
+        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col], groups=groups)
     elif cv == 'KFold':
         splitter = KFold(n_splits=n_splits)
-        split = splitter.split(train.drop(columns=target_col), train[target_col])
+        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col])
     elif cv == 'StratifiedKFold':
         splitter = StratifiedKFold(n_splits=n_splits)
-        split = splitter.split(train.drop(columns=target_col), train[target_col])
+        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col])
     elif cv == 'TimeSeriesSplit':
         splitter = TimeSeriesSplit(n_splits=n_splits)
-        split = splitter.split(train.drop(columns=target_col), train[target_col])
+        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col])
     else:
         raise ValueError(f"hey this cv is not availlable; maybe mind your syntax: {cv}")
 
     # Perform the cross-validation
     for train_index, test_index in split:
         print(f"train shape : {train_index.shape}, test shape:{test_index.shape}")
-        train_v, test_v = train.iloc[train_index], train.iloc[test_index]
+        train_v, test_v = dataset.iloc[train_index], dataset.iloc[test_index]
         stds.append(test_v[target_col].std())
         scores.append(validate(trainset=train_v, testset=test_v, target_col=target_col))
 

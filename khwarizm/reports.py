@@ -1,7 +1,7 @@
 import pandas as pd 
 import numpy as np
 
-def missing_values(dataframe:pd.DataFrame):    
+def missing_values(dataset:pd.DataFrame):    
     desc = pd.DataFrame(index = list(dataset))
     desc['type'] = dataset.dtypes
     desc['count'] = dataset.count()

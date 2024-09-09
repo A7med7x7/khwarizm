@@ -4,7 +4,22 @@ from sklearn.model_selection import *
 from sklearn.metrics import *
 from sklearn.ensemble import RandomForestClassifier
 from tqdm import tqdm
+import contextlib, os,sys
 
+
+@contextlib.contextmanager
+def suppress_output():
+    with open(os.devnull, 'w') as devnull:
+        old_stdout = sys.stdout
+        old_stderr = sys.stderr
+        sys.stdout = devnull
+        sys.stderr = devnull
+        try:
+            yield
+        finally:
+            sys.stdout = old_stdout
+            sys.stderr 
+            
 def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):
     model.fit(trainset.drop(columns=[target_col]),trainset[target_col])
     y_predicted = model.predict(testset.drop(columns=target_col))
@@ -16,7 +31,6 @@ def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):
     print(f"score : {score}")
     return score
 
-
 def validation_split(cv='GroupKFold', n_splits=5,target_col=None, groups=None): 
     stds = []
     scores = []
@@ -26,6 +40,12 @@ def validation_split(cv='GroupKFold', n_splits=5,target_col=None, groups=None):
         split = splitter.split(train.drop(columns=target_col), train[target_col], groups=groups)
     elif cv == 'KFold':
         splitter = KFold(n_splits=n_splits)
+        split = splitter.split(train.drop(columns=target_col), train[target_col])
+    elif cv == 'StratifiedKFold':
+        splitter = StratifiedKFold(n_splits=n_splits)
+        split = splitter.split(train.drop(columns=target_col), train[target_col])
+    elif cv == 'TimeSeriesSplit':
+        splitter = TimeSeriesSplit(n_splits=n_splits)
         split = splitter.split(train.drop(columns=target_col), train[target_col])
     else:
         raise ValueError(f"hey this cv is not availlable; maybe mind your syntax: {cv}")
@@ -39,7 +59,6 @@ def validation_split(cv='GroupKFold', n_splits=5,target_col=None, groups=None):
 
     return np.array(scores).mean()
 
-
 class feature_combination:
     def __init__(self, model, metric=accuracy_score, cv=None):
         self.model = model
@@ -47,7 +66,7 @@ class feature_combination:
         self.cv = cv
         self.baseline_score = None
         self.feature_importances = None
-    
+
     def fit(self, X, y, test_size=0.2, random_state=42):
         # Split the data into training and testing sets to test the feature
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(

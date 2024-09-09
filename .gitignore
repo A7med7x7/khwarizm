@@ -5,10 +5,14 @@ __pycache__/
 
 # C extensions
 *.so
-#expermentation notebook 
+#expermentation notebook & python files 
 experments
+practice.py
 
+#venv 
+khawrizmvenv
 # Distribution / packaging
+
 .Python
 build/
 develop-eggs/

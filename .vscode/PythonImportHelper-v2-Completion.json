@@ -18,7 +18,7 @@
         "documentation": {}
     },
     {
-        "label": "*",
+        "label": "TimeSeriesSplit",
         "importPath": "sklearn.model_selection",
         "description": "sklearn.model_selection",
         "isExtraImport": true,
@@ -26,7 +26,31 @@
         "documentation": {}
     },
     {
-        "label": "*",
+        "label": "GroupKFold",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "KFold",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "cross_val_score",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "mean_squared_error",
         "importPath": "sklearn.metrics",
         "description": "sklearn.metrics",
         "isExtraImport": true,
@@ -34,11 +58,12 @@
         "documentation": {}
     },
     {
-        "label": "RandomForestClassifier",
-        "importPath": "sklearn.ensemble",
-        "description": "sklearn.ensemble",
+        "label": "tqdm",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "sklearn.ensemble",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "detail": "tqdm",
         "documentation": {}
     },
     {
@@ -64,15 +89,6 @@
         "description": "lightgbm",
         "isExtraImport": true,
         "detail": "lightgbm",
-        "documentation": {}
-    },
-    {
-        "label": "panas",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "panas",
-        "description": "panas",
-        "detail": "panas",
         "documentation": {}
     },
     {
@@ -165,7 +181,7 @@
         "kind": 2,
         "importPath": "khwarizm.feature_selection",
         "description": "khwarizm.feature_selection",
-        "peekOfCode": "def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):\n    model.fit(trainset.drop(columns=[target_col]),trainset[target_col])\n    y_predicted = model.predict(testset.drop(columns=target_col))\n    valid_idx = testset[target_col].notna()\n    valid_testset = testset[target_col][valid_idx]\n    valid_pred = y_predicted[valid_idx]\n    print(f\"std : {valid_testset}\")\n    score = mean_squared_error(valid_pred,valid_testset, squared=False)\n    print(f\"score : {score}\")\n    return score",
+        "peekOfCode": "def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):\n    with suppress_output(): \n        model.fit(trainset.drop(columns=[target_col]),trainset[target_col])\n    y_predicted = model.predict(testset.drop(columns=target_col))\n    valid_idx = testset[target_col].notna()\n    valid_testset = testset[target_col][valid_idx]\n    valid_pred = y_predicted[valid_idx]\n    print(f\"std : {valid_testset}\")\n    score = mean_squared_error(valid_pred,valid_testset, squared=False)\n    print(f\"score : {score}\")",
         "detail": "khwarizm.feature_selection",
         "documentation": {}
     },
@@ -183,7 +199,7 @@
         "kind": 2,
         "importPath": "khwarizm.preprocessing",
         "description": "khwarizm.preprocessing",
-        "peekOfCode": "def time_features(dataset:pd.DataFrame) -> pd.DataFrame:\n    time_col = ['date','Date','dates','timestamp','TimeStamp','dates']\n    for col in time_col: \n        if col in dataset.columns:\n            dataset['date'] = pd.to_datetime(dataset[col])\n            dataset['Year'] = dataset['date'].dt.year\n            dataset['Month'] = dataset['date'].dt.month\n            dataset['day'] = dataset['date'].dt.day\n            dataset['Weekday'] = dataset['date'].dt.weekday\n            dataset['Year_Week'] = dataset['Year'].astype(str) + '-' + dataset['Weekday'].astype(str)",
+        "peekOfCode": "def time_features(dataset:pd.DataFrame) -> pd.DataFrame:\n    time_col = ['date','Date','dates','timestamp','TimeStamp','dates']\n    for col in time_col: \n        if col in dataset.columns:\n            dataset['date'] = pd.to_datetime(dataset[col])\n            dataset['Year'] = dataset['date'].dt.year\n            dataset['month'] = dataset['date'].dt.month\n            dataset['day'] = dataset['date'].dt.day\n            dataset['Weekday'] = dataset['date'].dt.weekday\n            dataset['Year_week'] = dataset['Year'].astype(str) + '-' + dataset['Weekday'].astype(str)",
         "detail": "khwarizm.preprocessing",
         "documentation": {}
     },
@@ -219,7 +235,7 @@
         "kind": 2,
         "importPath": "khwarizm.utils",
         "description": "khwarizm.utils",
-        "peekOfCode": "def enviroment_setup(project_name:srt):\n    logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')\n    list_of_files = [\n        f\"{project_name}/data\",\n        f\"{project_name}/notebooks\",\n        f\"{project_name}/src/data\",  \n        f\"{project_name}/src/models\",\n        f\"{project_name}/src/evaluation\",\n        f\"{project_name}/src/inference\",\n        f\"{project_name}/src/utils\",",
+        "peekOfCode": "def enviroment_setup(project_name:str):\n    logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')\n    list_of_files = [\n        f\"{project_name}/data\",\n        f\"{project_name}/notebooks\",\n        f\"{project_name}/src/data\",  \n        f\"{project_name}/src/models\",\n        f\"{project_name}/src/evaluation\",\n        f\"{project_name}/src/inference\",\n        f\"{project_name}/src/utils\",",
         "detail": "khwarizm.utils",
         "documentation": {}
     }

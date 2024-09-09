@@ -1,4 +1,4 @@
-import panas as pd 
+import pandas as pd 
 import numpy as np 
 
 # adding rolling features with defined windows as attributes
@@ -9,8 +9,12 @@ def time_features(dataset:pd.DataFrame) -> pd.DataFrame:
         if col in dataset.columns:
             dataset['date'] = pd.to_datetime(dataset[col])
             dataset['Year'] = dataset['date'].dt.year
-            dataset['Month'] = dataset['date'].dt.month
+            dataset['month'] = dataset['date'].dt.month
             dataset['day'] = dataset['date'].dt.day
             dataset['Weekday'] = dataset['date'].dt.weekday
-            dataset['Year_Week'] = dataset['Year'].astype(str) + '-' + dataset['Weekday'].astype(str)
-            dataset['Month_day'] = dataset['Month'].astype(str) + '-' + dataset['day'].astype(str)
+            dataset['Year_week'] = dataset['Year'].astype(str) + '-' + dataset['Weekday'].astype(str)
+            dataset['month_day'] = dataset['month'].astype(str) + '-' + dataset['day'].astype(str)
+            
+    return dataset
+
+        

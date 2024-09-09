@@ -1,8 +1,13 @@
 import numpy as np
+
+try:
+    np_round = np.round_
+except AttributeError:
+    np_round = np.round
+
 import pandas as pd
-from sklearn.model_selection import *
-from sklearn.metrics import *
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import TimeSeriesSplit, GroupKFold, KFold, cross_val_score
+from sklearn.metrics import mean_squared_error
 from tqdm import tqdm
 import contextlib, os,sys
 from lightgbm import LGBMRegressor
@@ -19,9 +24,11 @@ def suppress_output():
         finally:
             sys.stdout = old_stdout
             sys.stderr 
-            
+        
+
 def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):
-    model.fit(trainset.drop(columns=[target_col]),trainset[target_col])
+    with suppress_output(): 
+        model.fit(trainset.drop(columns=[target_col]),trainset[target_col])
     y_predicted = model.predict(testset.drop(columns=target_col))
     valid_idx = testset[target_col].notna()
     valid_testset = testset[target_col][valid_idx]
@@ -37,7 +44,7 @@ def validation_split(cv='GroupKFold', n_splits=5,dataset=None,target_col=None, g
     assert groups is not None, "groups is required"
     stds = []
     scores = []
-
+    
     if cv == 'GroupKFold':
         splitter = GroupKFold(n_splits=n_splits)
         split = splitter.split(dataset.drop(columns=target_col), dataset[target_col], groups=groups)

@@ -1,6 +1,5 @@
-import pandas as pd 
-import numpy as np 
-
+import pandas as pd
+pd.__version__
 # adding rolling features with defined windows as attributes
 # time-series decomposition 
 def time_features(dataset:pd.DataFrame) -> pd.DataFrame:
@@ -16,5 +15,3 @@ def time_features(dataset:pd.DataFrame) -> pd.DataFrame:
             dataset['month_day'] = dataset['month'].astype(str) + '-' + dataset['day'].astype(str)
             
     return dataset
-
-        

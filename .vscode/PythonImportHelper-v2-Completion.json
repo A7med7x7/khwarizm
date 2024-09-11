@@ -159,6 +159,14 @@
         "documentation": {}
     },
     {
+        "label": "feature_selection",
+        "importPath": "khwarizm",
+        "description": "khwarizm",
+        "isExtraImport": true,
+        "detail": "khwarizm",
+        "documentation": {}
+    },
+    {
         "label": "feature_combination",
         "kind": 6,
         "importPath": "khwarizm.feature_selection",

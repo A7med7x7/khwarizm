@@ -1,12 +1,18 @@
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import *
-from sklearn.metrics import *
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import TimeSeriesSplit, GroupKFold, KFold, cross_val_score
+from sklearn.metrics import mean_squared_error,accuracy_score
 from tqdm import tqdm
 import contextlib, os,sys
+from lightgbm import LGBMRegressor
+
+try:
+    np_round = np.round_
+except AttributeError:
+    np_round = np.round
 
 
+accuracy_score = 'what ever you set'
 @contextlib.contextmanager
 def suppress_output():
     with open(os.devnull, 'w') as devnull:
@@ -19,9 +25,11 @@ def suppress_output():
         finally:
             sys.stdout = old_stdout
             sys.stderr 
-            
+        
+
 def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):
-    model.fit(trainset.drop(columns=[target_col]),trainset[target_col])
+    with suppress_output(): 
+        model.fit(trainset.drop(columns=[target_col]),trainset[target_col])
     y_predicted = model.predict(testset.drop(columns=target_col))
     valid_idx = testset[target_col].notna()
     valid_testset = testset[target_col][valid_idx]
@@ -31,29 +39,32 @@ def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):
     print(f"score : {score}")
     return score
 
-def validation_split(cv='GroupKFold', n_splits=5,target_col=None, groups=None): 
+def validation_split(cv='GroupKFold', n_splits=5,dataset=None,target_col=None, groups=None): 
+    assert dataset is not None, "dataset is required"
+    assert target_col is not None, "target_col is required"
+    assert groups is not None, "groups is required"
     stds = []
     scores = []
-
+    
     if cv == 'GroupKFold':
         splitter = GroupKFold(n_splits=n_splits)
-        split = splitter.split(train.drop(columns=target_col), train[target_col], groups=groups)
+        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col], groups=groups)
     elif cv == 'KFold':
         splitter = KFold(n_splits=n_splits)
-        split = splitter.split(train.drop(columns=target_col), train[target_col])
+        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col])
     elif cv == 'StratifiedKFold':
         splitter = StratifiedKFold(n_splits=n_splits)
-        split = splitter.split(train.drop(columns=target_col), train[target_col])
+        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col])
     elif cv == 'TimeSeriesSplit':
         splitter = TimeSeriesSplit(n_splits=n_splits)
-        split = splitter.split(train.drop(columns=target_col), train[target_col])
+        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col])
     else:
         raise ValueError(f"hey this cv is not availlable; maybe mind your syntax: {cv}")
 
     # Perform the cross-validation
     for train_index, test_index in split:
         print(f"train shape : {train_index.shape}, test shape:{test_index.shape}")
-        train_v, test_v = train.iloc[train_index], train.iloc[test_index]
+        train_v, test_v = dataset.iloc[train_index], dataset.iloc[test_index]
         stds.append(test_v[target_col].std())
         scores.append(validate(trainset=train_v, testset=test_v, target_col=target_col))
 

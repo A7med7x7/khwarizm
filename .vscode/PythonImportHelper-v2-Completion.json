@@ -18,7 +18,7 @@
         "documentation": {}
     },
     {
-        "label": "*",
+        "label": "TimeSeriesSplit",
         "importPath": "sklearn.model_selection",
         "description": "sklearn.model_selection",
         "isExtraImport": true,
@@ -26,7 +26,31 @@
         "documentation": {}
     },
     {
-        "label": "*",
+        "label": "GroupKFold",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "KFold",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "cross_val_score",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "mean_squared_error",
         "importPath": "sklearn.metrics",
         "description": "sklearn.metrics",
         "isExtraImport": true,
@@ -34,11 +58,12 @@
         "documentation": {}
     },
     {
-        "label": "RandomForestClassifier",
-        "importPath": "sklearn.ensemble",
-        "description": "sklearn.ensemble",
+        "label": "tqdm",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "sklearn.ensemble",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "detail": "tqdm",
         "documentation": {}
     },
     {
@@ -50,27 +75,37 @@
         "documentation": {}
     },
     {
-        "label": "feature_combination",
-        "importPath": "khwarizm.feature_selection",
-        "description": "khwarizm.feature_selection",
+        "label": "contextlib,",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "khwarizm.feature_selection",
+        "importPath": "contextlib.",
+        "description": "contextlib.",
+        "detail": "contextlib.",
         "documentation": {}
     },
     {
-        "label": "setup",
-        "importPath": "setuptools",
-        "description": "setuptools",
+        "label": "LGBMRegressor",
+        "importPath": "lightgbm",
+        "description": "lightgbm",
         "isExtraImport": true,
-        "detail": "setuptools",
+        "detail": "lightgbm",
         "documentation": {}
     },
     {
-        "label": "find_packages",
-        "importPath": "setuptools",
-        "description": "setuptools",
+        "label": "matplotlib.pyplot",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "setuptools",
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "seasonal_decompose",
+        "importPath": "statsmodels.tsa.seasonal",
+        "description": "statsmodels.tsa.seasonal",
+        "isExtraImport": true,
+        "detail": "statsmodels.tsa.seasonal",
         "documentation": {}
     },
     {
@@ -91,20 +126,44 @@
         "documentation": {}
     },
     {
-        "label": "Ensembles",
-        "importPath": "khwarizm.src.ensembles",
-        "description": "khwarizm.src.ensembles",
+        "label": "logging",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "khwarizm.src.ensembles",
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
         "documentation": {}
     },
     {
-        "label": "Ensembles",
-        "kind": 6,
-        "importPath": "khwarizm.ensembles",
-        "description": "khwarizm.ensembles",
-        "peekOfCode": "class Ensembles:\n    @staticmethod\n    def ensembles(models: list) -> str:\n        return f\"You have successfully selected: {models}\"",
-        "detail": "khwarizm.ensembles",
+        "label": "setup",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "find_packages",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "time_features",
+        "importPath": "khwarizm.preprocessing",
+        "description": "khwarizm.preprocessing",
+        "isExtraImport": true,
+        "detail": "khwarizm.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "feature_selection",
+        "importPath": "khwarizm",
+        "description": "khwarizm",
+        "isExtraImport": true,
+        "detail": "khwarizm",
         "documentation": {}
     },
     {
@@ -117,11 +176,20 @@
         "documentation": {}
     },
     {
+        "label": "suppress_output",
+        "kind": 2,
+        "importPath": "khwarizm.feature_selection",
+        "description": "khwarizm.feature_selection",
+        "peekOfCode": "def suppress_output():\n    with open(os.devnull, 'w') as devnull:\n        old_stdout = sys.stdout\n        old_stderr = sys.stderr\n        sys.stdout = devnull\n        sys.stderr = devnull\n        try:\n            yield\n        finally:\n            sys.stdout = old_stdout",
+        "detail": "khwarizm.feature_selection",
+        "documentation": {}
+    },
+    {
         "label": "validate",
         "kind": 2,
         "importPath": "khwarizm.feature_selection",
         "description": "khwarizm.feature_selection",
-        "peekOfCode": "def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):\n    model.fit(trainset.drop(columns=[target_col]),trainset[target_col])\n    y_predicted = model.predict(testset.drop(columns=target_col))\n    valid_idx = testset[target_col].notna()\n    valid_testset = testset[target_col][valid_idx]\n    valid_pred = y_predicted[valid_idx]\n    print(f\"std : {valid_testset}\")\n    score = mean_squared_error(valid_pred,valid_testset, squared=False)\n    print(f\"score : {score}\")\n    return score",
+        "peekOfCode": "def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):\n    with suppress_output(): \n        model.fit(trainset.drop(columns=[target_col]),trainset[target_col])\n    y_predicted = model.predict(testset.drop(columns=target_col))\n    valid_idx = testset[target_col].notna()\n    valid_testset = testset[target_col][valid_idx]\n    valid_pred = y_predicted[valid_idx]\n    print(f\"std : {valid_testset}\")\n    score = mean_squared_error(valid_pred,valid_testset, squared=False)\n    print(f\"score : {score}\")",
         "detail": "khwarizm.feature_selection",
         "documentation": {}
     },
@@ -130,125 +198,53 @@
         "kind": 2,
         "importPath": "khwarizm.feature_selection",
         "description": "khwarizm.feature_selection",
-        "peekOfCode": "def validation_split(cv='GroupKFold', n_splits=5,target_col=None, groups=None): \n    stds = []\n    scores = []\n    if cv == 'GroupKFold':\n        splitter = GroupKFold(n_splits=n_splits)\n        split = splitter.split(train.drop(columns=target_col), train[target_col], groups=groups)\n    elif cv == 'KFold':\n        splitter = KFold(n_splits=n_splits)\n        split = splitter.split(train.drop(columns=target_col), train[target_col])\n    else:",
+        "peekOfCode": "def validation_split(cv='GroupKFold', n_splits=5,dataset=None,target_col=None, groups=None): \n    assert dataset is not None, \"dataset is required\"\n    assert target_col is not None, \"target_col is required\"\n    assert groups is not None, \"groups is required\"\n    stds = []\n    scores = []\n    if cv == 'GroupKFold':\n        splitter = GroupKFold(n_splits=n_splits)\n        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col], groups=groups)\n    elif cv == 'KFold':",
         "detail": "khwarizm.feature_selection",
         "documentation": {}
     },
     {
-        "label": "desc",
-        "kind": 5,
+        "label": "time_features",
+        "kind": 2,
+        "importPath": "khwarizm.preprocessing",
+        "description": "khwarizm.preprocessing",
+        "peekOfCode": "def time_features(dataset:pd.DataFrame) -> pd.DataFrame:\n    time_col = ['date','Date','dates','timestamp','TimeStamp','dates']\n    for col in time_col: \n        if col in dataset.columns:\n            dataset['date'] = pd.to_datetime(dataset[col])\n            dataset['Year'] = dataset['date'].dt.year\n            dataset['month'] = dataset['date'].dt.month\n            dataset['day'] = dataset['date'].dt.day\n            dataset['Weekday'] = dataset['date'].dt.weekday\n            dataset['Year_week'] = dataset['Year'].astype(str) + '-' + dataset['Weekday'].astype(str)",
+        "detail": "khwarizm.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "missing_values",
+        "kind": 2,
         "importPath": "khwarizm.reports",
         "description": "khwarizm.reports",
-        "peekOfCode": "desc = pd.DataFrame(index = list(train))\ndesc['type'] = train.dtypes\ndesc['count'] = train.count()\ndesc['nunique'] = train.nunique()\ndesc['%unique'] = desc['nunique'] /len(train) * 100\ndesc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100",
+        "peekOfCode": "def missing_values(dataset:pd.DataFrame):    \n    desc = pd.DataFrame(index = list(dataset))\n    desc['type'] = dataset.dtypes\n    desc['count'] = dataset.count()\n    desc['nunique'] = dataset.nunique()\n    desc['%unique'] = desc['nunique'] /len(dataset) * 100\n    desc['null'] = dataset.isnull().sum()\n    desc['%null'] = desc['null'] / len(dataset) * 100\n    desc = pd.concat([desc,dataset.describe().T.drop('count',axis=1)],axis=1)\n    report = desc.sort_values(by=['type','null']).style.background_gradient(axis=0)",
         "detail": "khwarizm.reports",
         "documentation": {}
     },
     {
-        "label": "desc['type']",
-        "kind": 5,
-        "importPath": "khwarizm.reports",
-        "description": "khwarizm.reports",
-        "peekOfCode": "desc['type'] = train.dtypes\ndesc['count'] = train.count()\ndesc['nunique'] = train.nunique()\ndesc['%unique'] = desc['nunique'] /len(train) * 100\ndesc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
-        "detail": "khwarizm.reports",
+        "label": "plot_numerical_distributions",
+        "kind": 2,
+        "importPath": "khwarizm.time_series",
+        "description": "khwarizm.time_series",
+        "peekOfCode": "def plot_numerical_distributions(dataset:pd.DataFrame):\n    numerical_cols = dataset.select_dtypes(include=['number']).columns\n    n_cols = 3\n    n_rows = (len(numerical_cols) + n_cols - 1) // n_cols\n    fig, axes = plt.subplots(n_rows, n_cols, figsize=(15, 5 * n_rows))\n    axes = axes.flatten()\n    for i, col in enumerate(numerical_cols):\n        dataset[col] = dataset[col].apply(np.log1p)\n        sns.histplot(dataset[col], kde=True, ax=axes[i])\n        axes[i].set_title(f'Distribution of {col}')",
+        "detail": "khwarizm.time_series",
         "documentation": {}
     },
     {
-        "label": "desc['count']",
-        "kind": 5,
-        "importPath": "khwarizm.reports",
-        "description": "khwarizm.reports",
-        "peekOfCode": "desc['count'] = train.count()\ndesc['nunique'] = train.nunique()\ndesc['%unique'] = desc['nunique'] /len(train) * 100\ndesc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
-        "detail": "khwarizm.reports",
+        "label": "plot_target_curve",
+        "kind": 2,
+        "importPath": "khwarizm.time_series",
+        "description": "khwarizm.time_series",
+        "peekOfCode": "def plot_target_curve(datase,time_feature: str,target: str): \n    dataset[feature] = np.arange(len(dataset.index))\n    plt.rc(\n        \"axes\",\n        labelweight=\"bold\",\n        labelsize=\"large\",\n        titleweight=\"bold\",\n        titlesize=16,\n        titlepad=10,\n    )",
+        "detail": "khwarizm.time_series",
         "documentation": {}
     },
     {
-        "label": "desc['nunique']",
-        "kind": 5,
-        "importPath": "khwarizm.reports",
-        "description": "khwarizm.reports",
-        "peekOfCode": "desc['nunique'] = train.nunique()\ndesc['%unique'] = desc['nunique'] /len(train) * 100\ndesc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
-        "detail": "khwarizm.reports",
-        "documentation": {}
-    },
-    {
-        "label": "desc['%unique']",
-        "kind": 5,
-        "importPath": "khwarizm.reports",
-        "description": "khwarizm.reports",
-        "peekOfCode": "desc['%unique'] = desc['nunique'] /len(train) * 100\ndesc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
-        "detail": "khwarizm.reports",
-        "documentation": {}
-    },
-    {
-        "label": "desc['null']",
-        "kind": 5,
-        "importPath": "khwarizm.reports",
-        "description": "khwarizm.reports",
-        "peekOfCode": "desc['null'] = train.isnull().sum()\ndesc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
-        "detail": "khwarizm.reports",
-        "documentation": {}
-    },
-    {
-        "label": "desc['%null']",
-        "kind": 5,
-        "importPath": "khwarizm.reports",
-        "description": "khwarizm.reports",
-        "peekOfCode": "desc['%null'] = desc['null'] / len(train) * 100\ndesc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
-        "detail": "khwarizm.reports",
-        "documentation": {}
-    },
-    {
-        "label": "desc",
-        "kind": 5,
-        "importPath": "khwarizm.reports",
-        "description": "khwarizm.reports",
-        "peekOfCode": "desc = pd.concat([desc,train.describe().T.drop('count',axis=1)],axis=1)\ndesc.sort_values(by=['type','null']).style.background_gradient(axis=0)\nmissing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
-        "detail": "khwarizm.reports",
-        "documentation": {}
-    },
-    {
-        "label": "missing_percentage",
-        "kind": 5,
-        "importPath": "khwarizm.reports",
-        "description": "khwarizm.reports",
-        "peekOfCode": "missing_percentage = train.isnull().mean(axis=0) * 100\nprint(missing_percentage)",
-        "detail": "khwarizm.reports",
-        "documentation": {}
-    },
-    {
-        "label": "project_name",
-        "kind": 5,
-        "importPath": "template",
-        "description": "template",
-        "peekOfCode": "project_name = \"khwarizm\"\nlist_of_files = [\n    f\"{project_name}/__init__.py\",\n    f\"{project_name}/src/khwarizm/__init__.py\",\n    f\"{project_name}/src/khwarizm/preprocessing.py\",  \n    f\"{project_name}/src/khwarizm/metrics.py\",\n    f\"{project_name}/src/khwarizm/ensembles.py\",\n    f\"{project_name}/src/khwarizm/feature_selection.py\",\n    f\"{project_name}/src/khwarizm/utils.py\",\n    f\"{project_name}/src/khwarizm/logs.py\",",
-        "detail": "template",
-        "documentation": {}
-    },
-    {
-        "label": "list_of_files",
-        "kind": 5,
-        "importPath": "template",
-        "description": "template",
-        "peekOfCode": "list_of_files = [\n    f\"{project_name}/__init__.py\",\n    f\"{project_name}/src/khwarizm/__init__.py\",\n    f\"{project_name}/src/khwarizm/preprocessing.py\",  \n    f\"{project_name}/src/khwarizm/metrics.py\",\n    f\"{project_name}/src/khwarizm/ensembles.py\",\n    f\"{project_name}/src/khwarizm/feature_selection.py\",\n    f\"{project_name}/src/khwarizm/utils.py\",\n    f\"{project_name}/src/khwarizm/logs.py\",\n    f\"{project_name}/src/khwarizm/reports.py\",",
-        "detail": "template",
-        "documentation": {}
-    },
-    {
-        "label": "models",
-        "kind": 5,
-        "importPath": "test",
-        "description": "test",
-        "peekOfCode": "models = ['lgbm', 'catboost']\noutput = Ensembles.ensembles(models=models)\noutput",
-        "detail": "test",
-        "documentation": {}
-    },
-    {
-        "label": "output",
-        "kind": 5,
-        "importPath": "test",
-        "description": "test",
-        "peekOfCode": "output = Ensembles.ensembles(models=models)\noutput",
-        "detail": "test",
+        "label": "enviroment_setup",
+        "kind": 2,
+        "importPath": "khwarizm.utils",
+        "description": "khwarizm.utils",
+        "peekOfCode": "def enviroment_setup(project_name:str):\n    logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')\n    list_of_files = [\n        f\"{project_name}/data\",\n        f\"{project_name}/notebooks\",\n        f\"{project_name}/src/data\",  \n        f\"{project_name}/src/models\",\n        f\"{project_name}/src/evaluation\",\n        f\"{project_name}/src/inference\",\n        f\"{project_name}/src/utils\",",
+        "detail": "khwarizm.utils",
         "documentation": {}
     }
 ]

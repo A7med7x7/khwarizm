@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 import logging
 
-def enviroment_setup(project_name:srt):
+def enviroment_setup(project_name:str):
     
     logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
 

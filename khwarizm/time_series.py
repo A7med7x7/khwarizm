@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from statsmodels.tsa.seasonal import seasonal_decompose
+import pandas as pd
 
 def plot_numerical_distributions(dataset:pd.DataFrame):
     numerical_cols = dataset.select_dtypes(include=['number']).columns

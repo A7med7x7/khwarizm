@@ -1,17 +1,18 @@
 import numpy as np
+import pandas as pd
+from sklearn.model_selection import TimeSeriesSplit, GroupKFold, KFold, cross_val_score
+from sklearn.metrics import mean_squared_error,accuracy_score
+from tqdm import tqdm
+import contextlib, os,sys
+from lightgbm import LGBMRegressor
 
 try:
     np_round = np.round_
 except AttributeError:
     np_round = np.round
 
-import pandas as pd
-from sklearn.model_selection import TimeSeriesSplit, GroupKFold, KFold, cross_val_score
-from sklearn.metrics import mean_squared_error
-from tqdm import tqdm
-import contextlib, os,sys
-from lightgbm import LGBMRegressor
 
+accuracy_score = 'what ever you set'
 @contextlib.contextmanager
 def suppress_output():
     with open(os.devnull, 'w') as devnull:

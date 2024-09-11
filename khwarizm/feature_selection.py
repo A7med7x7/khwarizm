@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import TimeSeriesSplit, GroupKFold, KFold, cross_val_score
-from sklearn.metrics import mean_squared_error,accuracy_score
+from sklearn.model_selection import *
+from sklearn.metrics import *
 from tqdm import tqdm
 import contextlib, os,sys
 from lightgbm import LGBMRegressor
@@ -27,9 +27,9 @@ def suppress_output():
             sys.stderr 
         
 
-def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):
-    with suppress_output(): 
-        model.fit(trainset.drop(columns=[target_col]),trainset[target_col])
+def fit(model, trainset, testset, target_col):
+    #with suppress_output(): 
+    model.fit(trainset.drop(columns=[target_col]),trainset[target_col])
     y_predicted = model.predict(testset.drop(columns=target_col))
     valid_idx = testset[target_col].notna()
     valid_testset = testset[target_col][valid_idx]
@@ -39,13 +39,14 @@ def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):
     print(f"score : {score}")
     return score
 
-def validation_split(cv='GroupKFold', n_splits=5,dataset=None,target_col=None, groups=None): 
+def validate_model(model,cv='GroupKFold', n_splits=5,dataset=None,target_col=None, groups=None): 
     assert dataset is not None, "dataset is required"
     assert target_col is not None, "target_col is required"
     assert groups is not None, "groups is required"
     stds = []
     scores = []
     
+    model = model
     if cv == 'GroupKFold':
         splitter = GroupKFold(n_splits=n_splits)
         split = splitter.split(dataset.drop(columns=target_col), dataset[target_col], groups=groups)
@@ -66,11 +67,13 @@ def validation_split(cv='GroupKFold', n_splits=5,dataset=None,target_col=None, g
         print(f"train shape : {train_index.shape}, test shape:{test_index.shape}")
         train_v, test_v = dataset.iloc[train_index], dataset.iloc[test_index]
         stds.append(test_v[target_col].std())
-        scores.append(validate(trainset=train_v, testset=test_v, target_col=target_col))
+        scores.append(fit(model, train_v, test_v, target_col))
+
 
     return np.array(scores).mean()
 
-class feature_combination:
+
+"""class feature_combination:
     def __init__(self, model, metric=accuracy_score, cv=None):
         self.model = model
         self.metric = metric
@@ -138,10 +141,9 @@ class feature_combination:
             print(f"Features: {base_features + [feature]}, Score: {score:.4f}")
     
     def get_feature_importances(self):
-        """
-        Returns the feature importances DataFrame.
-        """
+
         if self.feature_importances_df is not None:
             return self.feature_importances_df
         else:
             raise ValueError("The evaluate method must be called before getting feature importances.")
+"""

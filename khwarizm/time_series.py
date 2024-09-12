@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from statsmodels.tsa.seasonal import 
+#from statsmodels.tsa.seasonal import seasonal_decompose
 import seaborn as sns
 import pandas as pd
 import numpy as np
@@ -13,12 +13,24 @@ class Features:
         self.testset = testset
         self.date_feature = date_feature
 
-    def rolling_feature(self, feature: str, window: int):
-        for df in (self.trainset, self.testset):
-            df[f"{feature}_rolling_max_{window}"] = df[feature].rolling(window).max()
-        return self.trainset, self.testset  # Ensure this is outside the loop
+    def rolling_feature(self, feature: str, window: int, func: str = 'max'):
+            # Define a dictionary to map function names to pandas methods
+            func_dict = {
+                'max': lambda df: df.rolling(window).max(),
+                'min': lambda df: df.rolling(window).min(),
+                'std': lambda df: df.rolling(window).std(),
+                'mean': lambda df: df.rolling(window).mean()
+            }
+            
+            # Check if the provided function is in the dictionary
+            if func not in func_dict:
+                raise ValueError(f"Function {func} not recognized. Available functions: {', '.join(func_dict.keys())}")
 
-
+            for df in (self.trainset, self.testset):
+                df[f"{feature}_rolling_{func}_{window}"] = func_dict[func](df[feature])
+            
+            return self.trainset, self.testset
+        
     def time_features(self, dataset: pd.DataFrame) -> pd.DataFrame:
         time_cols = ['date','Date','dates','timestamp','TimeStamp','dates']
         if self.date_feature in time_cols:
@@ -31,22 +43,9 @@ class Features:
                 dataset['Weekday'] = dataset['date'].dt.weekday
                 dataset['Year_week'] = dataset['Year'].astype(str) + '-' + dataset['Weekday'].astype(str)
                 dataset['month_day'] = dataset['month'].astype(str) + '-' + dataset['day'].astype(str)
-                    
+                dataset.drop(columns=['date'],axis=1, inplace=True)
         return dataset
 
-def time_features(dataset:pd.DataFrame) -> pd.DataFrame:
-    time_col = ['date','Date','dates','timestamp','TimeStamp','dates']
-    for col in time_col: 
-        if col in dataset.columns:
-            dataset['date'] = pd.to_datetime(dataset[col])
-            dataset['Year'] = dataset['date'].dt.year
-            dataset['month'] = dataset['date'].dt.month
-            dataset['day'] = dataset['date'].dt.day
-            dataset['Weekday'] = dataset['date'].dt.weekday
-            dataset['Year_week'] = dataset['Year'].astype(str) + '-' + dataset['Weekday'].astype(str)
-            dataset['month_day'] = dataset['month'].astype(str) + '-' + dataset['day'].astype(str)
-            
-    return dataset
 
 
 

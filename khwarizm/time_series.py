@@ -1,31 +1,30 @@
 import matplotlib.pyplot as plt
-from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.seasonal import 
 import seaborn as sns
 import pandas as pd
 import numpy as np
 # adding rolling features with defined windows as attributes
 # time-series decomposition 
-class Features:
 
-    def __init__(self, dataset:pd.DataFrame,trainset: pd.DataFrame, testset: pd.DataFrame, date_feature: str):
+class Features:
+    def __init__(self, dataset: pd.DataFrame, trainset: pd.DataFrame, testset: pd.DataFrame, date_feature: str):
         self.dataset = dataset
         self.trainset = trainset
         self.testset = testset
         self.date_feature = date_feature
-        
-    @staticmethod
-    def rolling(self, feature: str, window: int):
-        for dataset in (self.trainset, self.testset):
-            dataset[f"{feature}_rolling_max_{window}"] = dataset[feature].rolling(window).max()
-            return dataset
-    
-    @staticmethod
+
+    def rolling_feature(self, feature: str, window: int):
+        for df in (self.trainset, self.testset):
+            df[f"{feature}_rolling_max_{window}"] = df[feature].rolling(window).max()
+        return self.trainset, self.testset  # Ensure this is outside the loop
+
+
     def time_features(self, dataset: pd.DataFrame) -> pd.DataFrame:
         time_cols = ['date','Date','dates','timestamp','TimeStamp','dates']
         if self.date_feature in time_cols:
             if self.date_feature in dataset.columns:
 
-                dataset['date'] = pd.to_datetime(dataset[col])
+                dataset['date'] = pd.to_datetime(dataset[self.date_feature])
                 dataset['Year'] = dataset['date'].dt.year
                 dataset['month'] = dataset['date'].dt.month
                 dataset['day'] = dataset['date'].dt.day
@@ -34,7 +33,6 @@ class Features:
                 dataset['month_day'] = dataset['month'].astype(str) + '-' + dataset['day'].astype(str)
                     
         return dataset
-
 
 def time_features(dataset:pd.DataFrame) -> pd.DataFrame:
     time_col = ['date','Date','dates','timestamp','TimeStamp','dates']

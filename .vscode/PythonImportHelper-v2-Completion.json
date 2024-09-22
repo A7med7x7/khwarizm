@@ -18,7 +18,7 @@
         "documentation": {}
     },
     {
-        "label": "TimeSeriesSplit",
+        "label": "*",
         "importPath": "sklearn.model_selection",
         "description": "sklearn.model_selection",
         "isExtraImport": true,
@@ -26,44 +26,11 @@
         "documentation": {}
     },
     {
-        "label": "GroupKFold",
-        "importPath": "sklearn.model_selection",
-        "description": "sklearn.model_selection",
-        "isExtraImport": true,
-        "detail": "sklearn.model_selection",
-        "documentation": {}
-    },
-    {
-        "label": "KFold",
-        "importPath": "sklearn.model_selection",
-        "description": "sklearn.model_selection",
-        "isExtraImport": true,
-        "detail": "sklearn.model_selection",
-        "documentation": {}
-    },
-    {
-        "label": "cross_val_score",
-        "importPath": "sklearn.model_selection",
-        "description": "sklearn.model_selection",
-        "isExtraImport": true,
-        "detail": "sklearn.model_selection",
-        "documentation": {}
-    },
-    {
-        "label": "mean_squared_error",
+        "label": "*",
         "importPath": "sklearn.metrics",
         "description": "sklearn.metrics",
         "isExtraImport": true,
         "detail": "sklearn.metrics",
-        "documentation": {}
-    },
-    {
-        "label": "tqdm",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "tqdm",
-        "description": "tqdm",
-        "detail": "tqdm",
         "documentation": {}
     },
     {
@@ -101,11 +68,12 @@
         "documentation": {}
     },
     {
-        "label": "seasonal_decompose",
-        "importPath": "statsmodels.tsa.seasonal",
-        "description": "statsmodels.tsa.seasonal",
+        "label": "seaborn",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "statsmodels.tsa.seasonal",
+        "importPath": "seaborn",
+        "description": "seaborn",
+        "detail": "seaborn",
         "documentation": {}
     },
     {
@@ -151,28 +119,11 @@
         "documentation": {}
     },
     {
-        "label": "time_features",
-        "importPath": "khwarizm.preprocessing",
-        "description": "khwarizm.preprocessing",
-        "isExtraImport": true,
-        "detail": "khwarizm.preprocessing",
-        "documentation": {}
-    },
-    {
-        "label": "feature_selection",
+        "label": "utils",
         "importPath": "khwarizm",
         "description": "khwarizm",
         "isExtraImport": true,
         "detail": "khwarizm",
-        "documentation": {}
-    },
-    {
-        "label": "feature_combination",
-        "kind": 6,
-        "importPath": "khwarizm.feature_selection",
-        "description": "khwarizm.feature_selection",
-        "peekOfCode": "class feature_combination:\n    def __init__(self, model, metric=accuracy_score, cv=None):\n        self.model = model\n        self.metric = metric\n        self.cv = cv\n        self.baseline_score = None\n        self.feature_importances = None\n    def fit(self, X, y, test_size=0.2, random_state=42):\n        # Split the data into training and testing sets to test the feature\n        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(",
-        "detail": "khwarizm.feature_selection",
         "documentation": {}
     },
     {
@@ -185,39 +136,48 @@
         "documentation": {}
     },
     {
-        "label": "validate",
+        "label": "fit",
         "kind": 2,
         "importPath": "khwarizm.feature_selection",
         "description": "khwarizm.feature_selection",
-        "peekOfCode": "def validate(trainset,testset,target_col,model=LGBMRegressor(random_state=7)):\n    with suppress_output(): \n        model.fit(trainset.drop(columns=[target_col]),trainset[target_col])\n    y_predicted = model.predict(testset.drop(columns=target_col))\n    valid_idx = testset[target_col].notna()\n    valid_testset = testset[target_col][valid_idx]\n    valid_pred = y_predicted[valid_idx]\n    print(f\"std : {valid_testset}\")\n    score = mean_squared_error(valid_pred,valid_testset, squared=False)\n    print(f\"score : {score}\")",
+        "peekOfCode": "def fit(model, trainset, testset, target_col):\n    #with suppress_output(): \n    model.fit(trainset.drop(columns=[target_col]),trainset[target_col])\n    y_predicted = model.predict(testset.drop(columns=target_col))\n    valid_idx = testset[target_col].notna()\n    valid_testset = testset[target_col][valid_idx]\n    valid_pred = y_predicted[valid_idx]\n    print(f\"std : {valid_testset}\")\n    score = mean_squared_error(valid_pred,valid_testset, squared=False)\n    print(f\"score : {score}\")",
         "detail": "khwarizm.feature_selection",
         "documentation": {}
     },
     {
-        "label": "validation_split",
+        "label": "validate_model",
         "kind": 2,
         "importPath": "khwarizm.feature_selection",
         "description": "khwarizm.feature_selection",
-        "peekOfCode": "def validation_split(cv='GroupKFold', n_splits=5,dataset=None,target_col=None, groups=None): \n    assert dataset is not None, \"dataset is required\"\n    assert target_col is not None, \"target_col is required\"\n    assert groups is not None, \"groups is required\"\n    stds = []\n    scores = []\n    if cv == 'GroupKFold':\n        splitter = GroupKFold(n_splits=n_splits)\n        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col], groups=groups)\n    elif cv == 'KFold':",
+        "peekOfCode": "def validate_model(model,cv='GroupKFold', n_splits=5,dataset=None,target_col=None, groups=None): \n    assert dataset is not None, \"dataset is required\"\n    assert target_col is not None, \"target_col is required\"\n    assert groups is not None, \"groups is required\"\n    stds = []\n    scores = []\n    model = model\n    if cv == 'GroupKFold':\n        splitter = GroupKFold(n_splits=n_splits)\n        split = splitter.split(dataset.drop(columns=target_col), dataset[target_col], groups=groups)",
         "detail": "khwarizm.feature_selection",
         "documentation": {}
     },
     {
-        "label": "time_features",
-        "kind": 2,
-        "importPath": "khwarizm.preprocessing",
-        "description": "khwarizm.preprocessing",
-        "peekOfCode": "def time_features(dataset:pd.DataFrame) -> pd.DataFrame:\n    time_col = ['date','Date','dates','timestamp','TimeStamp','dates']\n    for col in time_col: \n        if col in dataset.columns:\n            dataset['date'] = pd.to_datetime(dataset[col])\n            dataset['Year'] = dataset['date'].dt.year\n            dataset['month'] = dataset['date'].dt.month\n            dataset['day'] = dataset['date'].dt.day\n            dataset['Weekday'] = dataset['date'].dt.weekday\n            dataset['Year_week'] = dataset['Year'].astype(str) + '-' + dataset['Weekday'].astype(str)",
-        "detail": "khwarizm.preprocessing",
+        "label": "accuracy_score",
+        "kind": 5,
+        "importPath": "khwarizm.feature_selection",
+        "description": "khwarizm.feature_selection",
+        "peekOfCode": "accuracy_score = 'what ever you set'\n@contextlib.contextmanager\ndef suppress_output():\n    with open(os.devnull, 'w') as devnull:\n        old_stdout = sys.stdout\n        old_stderr = sys.stderr\n        sys.stdout = devnull\n        sys.stderr = devnull\n        try:\n            yield",
+        "detail": "khwarizm.feature_selection",
         "documentation": {}
     },
     {
-        "label": "missing_values",
-        "kind": 2,
+        "label": "Reports",
+        "kind": 6,
         "importPath": "khwarizm.reports",
         "description": "khwarizm.reports",
-        "peekOfCode": "def missing_values(dataset:pd.DataFrame):    \n    desc = pd.DataFrame(index = list(dataset))\n    desc['type'] = dataset.dtypes\n    desc['count'] = dataset.count()\n    desc['nunique'] = dataset.nunique()\n    desc['%unique'] = desc['nunique'] /len(dataset) * 100\n    desc['null'] = dataset.isnull().sum()\n    desc['%null'] = desc['null'] / len(dataset) * 100\n    desc = pd.concat([desc,dataset.describe().T.drop('count',axis=1)],axis=1)\n    report = desc.sort_values(by=['type','null']).style.background_gradient(axis=0)",
+        "peekOfCode": "class Reports: \n    def __init__(self, dataset: pd.DataFrame, trainset: pd.DataFrame, testset: pd.DataFrame, target: str):\n        self.dataset = dataset\n        self.trainset = trainset\n        self.testset = testset\n        self.target = target\n    def basic_stats(self):\n        stats = {}\n        for df_name, df in [(\"dataset\", self.dataset), (\"trainset\", self.trainset), (\"testset\", self.testset)]:\n            stats[df_name] = {",
         "detail": "khwarizm.reports",
+        "documentation": {}
+    },
+    {
+        "label": "Features",
+        "kind": 6,
+        "importPath": "khwarizm.time_series",
+        "description": "khwarizm.time_series",
+        "peekOfCode": "class Features:\n    def __init__(self, dataset: pd.DataFrame, trainset: pd.DataFrame, testset: pd.DataFrame, date_feature: str):\n        self.dataset = dataset\n        self.trainset = trainset\n        self.testset = testset\n        self.date_feature = date_feature\n    def rolling_feature(self, feature: str, window: int, func: str = 'max'):\n            # Define a dictionary to map function names to pandas methods\n            func_dict = {\n                'max': lambda df: df.rolling(window).max(),",
+        "detail": "khwarizm.time_series",
         "documentation": {}
     },
     {
@@ -234,7 +194,7 @@
         "kind": 2,
         "importPath": "khwarizm.time_series",
         "description": "khwarizm.time_series",
-        "peekOfCode": "def plot_target_curve(datase,time_feature: str,target: str): \n    dataset[feature] = np.arange(len(dataset.index))\n    plt.rc(\n        \"axes\",\n        labelweight=\"bold\",\n        labelsize=\"large\",\n        titleweight=\"bold\",\n        titlesize=16,\n        titlepad=10,\n    )",
+        "peekOfCode": "def plot_target_curve(dataset,time_feature: str,target: str): \n    dataset[target] = np.arange(len(dataset.index))\n    plt.rc(\n        \"axes\",\n        labelweight=\"bold\",\n        labelsize=\"large\",\n        titleweight=\"bold\",\n        titlesize=16,\n        titlepad=10,\n    )",
         "detail": "khwarizm.time_series",
         "documentation": {}
     },

@@ -35,15 +35,6 @@
     },
     {
         "label": "tqdm",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "tqdm",
-        "description": "tqdm",
-        "detail": "tqdm",
-        "documentation": {}
-    },
-    {
-        "label": "tqdm",
         "importPath": "tqdm",
         "description": "tqdm",
         "isExtraImport": true,

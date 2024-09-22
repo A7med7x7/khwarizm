@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages 
-import tqdm
 
 setup(
     name='khwarizm',
@@ -25,4 +24,11 @@ setup(
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
     ],
+    setup_requires=[
+        'numpy',
+        'pandas',
+        'scikit-learn',
+        'lightgbm',
+        'tqdm',
+        'scipy']
 )

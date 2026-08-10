@@ -35,7 +35,7 @@ class DataValidationUtils:
         return data
 
 def enviroment_setup(project_name:str):
-    
+ 
     logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
 
     list_of_files = [
